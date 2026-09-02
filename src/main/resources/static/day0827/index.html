@@ -1,0 +1,41 @@
+<!--
+    스프링 프로젝트 내 
+    src -> main -> java : 동적서버 ( 자바 파일 - dto / dao / controller ... ) -> 스프링이 view 대체
+
+    src -> main -> resources -> static : 정적서버 ( 웹 서버 )
+    -> html 작성후 spring server 재시작(ctrl + shift + f5) 해야 반영 ( open live server / 통합 브라우저 열기 로 미리보기는 가능 )
+    http 통신 방법 및 도구 : 1) 브라우저  2) Talend  3) JS( AXIOS )
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>스프링 프로젝트에서 만들어진 html</h3>
+    <div>
+        내용 : <input type = "text" class = "content" /> <br/> <!-- html-JS 연결과 같이 class / id 사용해 연결 -->
+        작성자 : <input type = "text" class = "writer"/> <br/>
+        <button onclick = "boardSave()">게시</button>
+    </div>
+    <div>
+        <table border = "2px">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>메뉴</th>
+                </tr>
+            </thead>
+            <tbody class = "boardList">
+            </tbody>
+        </table>
+    </div>
+</body>
+    <!-- AXIOS 연결 -->
+    <script src = "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src = "index.js"></script>
+</html>
