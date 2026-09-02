@@ -31,7 +31,7 @@ public class TestController {
     td.add(sample1);
     td.add(sample2);
     }
-    // [1] 등록
+    // 1. 등록
     @PostMapping("/save")
     public boolean testWrite(@RequestBody TestDto testDto) {
         return td.add(testDto); // 임의로 true 설정
