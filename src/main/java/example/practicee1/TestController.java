@@ -1,5 +1,5 @@
 
-package example.practice.practicee1;
+package example.practicee1;
 
 import java.util.ArrayList;
 

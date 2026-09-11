@@ -19,16 +19,25 @@ repositories {
 
 //의존성 (내부에 추가할 라이브러리 코드 넣음 -> 자동으로 라이브러리 설치)
 dependencies {
-	//spring boot
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	//mysql jdbc
+	// 의존성( dependencies ) { } 안에 프로젝트내 추가할 라이브러리 코드 -> 자동으로 라이브러리 설치
+	// 1. springboot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// 2. MYSQL jdbc
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	//lombok
+	// 3. 롬복 
 	compileOnly 'org.projectlombok:lombok'
   	annotationProcessor 'org.projectlombok:lombok'
+	// 4. JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootRun {
+    mainClass = 'example.practice5.AppStart'
 }

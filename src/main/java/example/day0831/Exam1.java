@@ -26,7 +26,7 @@ public class Exam1 {
             TestClass testClass = class2.getDeclaredConstructor().newInstance();
             method.invoke(testClass);
         }
-        cath(Exception e){
+        catch(Exception e){
             System.out.println(e);
         }
 
