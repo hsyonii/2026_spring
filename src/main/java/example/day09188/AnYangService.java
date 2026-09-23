@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service 
 public class AnYangService {
     // application.properties 에 api.public-data.service-key 로 할당된 api 키값  정의
-    @Value ("${api.public-data.service-key}")
+    @Value ("${api.public-data.service-key-hsy}")
     private  String myKey; // @Value 값을 serviceKey 에 주입
 
     WebClient wc = WebClient.builder().build();

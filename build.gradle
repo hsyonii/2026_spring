@@ -33,8 +33,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.2'
-
+	// 아래 라이브러리가 있다면 삭제 또는 주석 처리
+implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 	implementation 'com.opencsv:opencsv:5.12.0'
 }
 
