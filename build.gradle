@@ -34,8 +34,19 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	// 아래 라이브러리가 있다면 삭제 또는 주석 처리
-implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+	// CSV 파싱
 	implementation 'com.opencsv:opencsv:5.12.0'
+	// 비크립트 
+	implementation 'org.springframework.security:spring-security-crypto'
+
+	//JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+   	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+   	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+	
+	//Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
