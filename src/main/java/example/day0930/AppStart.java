@@ -1,4 +1,4 @@
-package example.day0929;
+package example.day0930;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
