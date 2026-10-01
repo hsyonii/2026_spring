@@ -1,6 +1,5 @@
 package example.day0930;
 
-import java.net.http.HttpHeaders;
 import java.time.Duration;
 
 import org.springframework.http.ResponseCookie;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RestController 
@@ -21,8 +19,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class MemberController {
+    private final JwtUtil jwtUtil;
     private final MemberService memberService;
-    private final JwtUtil ju;
+    private final RedisTokenService rts;
+
     // [1] 회원가입
     @PostMapping("/signup")
     public boolean signup( @RequestBody MemberDto memberDto ){
@@ -57,23 +57,52 @@ public class MemberController {
     @GetMapping("/me")
     // @CookieValue ( value = "쿠키명")
     public MemberDto getMyInfo(
-        @CookieValue (value = "login_member", required = false) String loginMno ){
+        @CookieValue (value = "accessToken", required = false) String loginMno ){
             if( loginMno == null ) return null;
             return memberService.getMyInfo(Long.parseLong(loginMno));
     }
 
+    private final RedisTokenService redisTokenService;
     // [4] 로그아웃 + 쿠키
     @PostMapping ("/logout")
-    public boolean logout( HttpServletResponse response ){
-        // 1. 삭제할 쿠키명과 동일한 이름으로 maxAge(0)하여 재발급
-        ResponseCookie cookie = ResponseCookie.from("login_member", "")
-            .path("/") // 모든곳에서 로그아웃 가능하도록 함.
-            .maxAge(0) // 바로 삭제
-            .httpOnly(true).secure(false)    
-            .build();
-        response.setHeader( org.springframework.http.HttpHeaders.SET_COOKIE, cookie.toString());
-        return true;
-    }
+    public boolean logout(
+        @CookieValue (value = "accessToken" , required = false) String accessToken,
+        HttpServletResponse response){
+            // accessToken 존재하면 회원번호 조회
+            if ( accessToken != null ){
+                Long mno = jwtUtil.getMnoFromToken(accessToken);
+                redisTokenService.deleteRefreshToken(mno);
+            }
+            ResponseCookie cookie1 = ResponseCookie.from("accessToken" ,"")
+                                                .path("/")
+                                                .maxAge(0)
+                                                .httpOnly(true)
+                                                .secure(false)
+                                                .build();
+            ResponseCookie cookie2 = ResponseCookie.from("accessToken" ,"")
+                                                .path("/")
+                                                .maxAge(0)
+                                                .httpOnly(true)
+                                                .secure(false)
+                                                .build();
+            response.setHeader(org.springframework.http.HttpHeaders.SET_COOKIE, cookie1.toString());
+            response.setHeader(org.springframework.http.HttpHeaders.SET_COOKIE, cookie2.toString());
+            return true;
+        }
+
+    // // [5] access 토큰 만들때
+    // @PostMapping("/reissue")
+    // public MemberDto (value = "refreshToken", required = false ) String refreshToken,
+    // HttpServletResponse response
+    // ){
+    //     if (refreshToken == null) retrun null;
+    //     Long mno = jwtUtil.getMnoFromToken(refreshToken);
+    //     String savedRT = rts.getRefreshToken(mno);
+    //     if(savedRT == null || !refreshToken.equals(savedRT)){
+    //         rts.deleteRefreshToken(mno);
+    //     }
+    // } 
+
 }
 /*
 
